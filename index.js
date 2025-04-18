@@ -3,11 +3,13 @@ import cors from "cors"
 import dotenv from "dotenv"
 import db from "./utils/db.js";
 import router from "./routes/user.routes.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 4000;
 app.use(express.json());
+app.use(cookieParser());
 app.use(urlencoded({extended:true}));
 app.use(cors({
     origin : process.env.BASE_URL,

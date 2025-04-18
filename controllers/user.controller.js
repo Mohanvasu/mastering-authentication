@@ -167,7 +167,7 @@ const login = async (req,res)=>{
 
         //jwt token
         const jwtToken = jwt.sign({id : user.id},process.env.JWT_SECRET,{
-            expiresIn : 15
+            expiresIn : "15m"
         })
 
         //set cookie
@@ -191,4 +191,20 @@ const login = async (req,res)=>{
     }
 }
 
-export {register,verify,login};
+const getProfile = async (req,res)=>{
+    const user = req.user;
+    const userProfile = {
+        _id : user._id,
+        name : user.name,
+        email : user.email,
+        role : user.role
+    }
+    console.log(`User is logged in currently : ${user.name}`);
+    return res.status(200).json({
+        success : true,
+        message : "User logged in currently",
+        userData : userProfile.name
+    })
+}
+
+export {register,verify,login,getProfile};
