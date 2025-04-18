@@ -1,0 +1,34 @@
+{
+  "name": "mastering-authentication",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mohanvasu/mastering-authentication.git"
+  },
+  "keywords": [],
+  "author": "Mohanvasu",
+  "type": "module",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mohanvasu/mastering-authentication/issues"
+  },
+  "homepage": "https://github.com/Mohanvasu/mastering-authentication#readme",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "nodemailer": "^6.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
