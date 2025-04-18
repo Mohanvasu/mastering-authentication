@@ -1,6 +1,6 @@
 //register controller
 import User from "../models/user.models.js";
-import mongoose from "mongoose";
+import bcrypt from "bcryptjs"
 import crypto from "crypto"
 import sendMail from "../utils/sendMail.utils.js"
 import { send } from "process";
@@ -127,14 +127,14 @@ const verify = async (req,res)=>{
     }
 }
 
-const login = async(req,res)=>{
+const login = async (req,res)=>{
     //1. get user data from req body
     const {email,password} = req.body;
 
     //2. validate
 
     if(!email || !password){
-        return req.status(400).json({
+        return res.status(400).json({
             success : false,
             message : "All fields are required"
         })
@@ -154,15 +154,16 @@ const login = async(req,res)=>{
                 message : "User not verified"
             })
         }
-
         //check password
-        const isPasswordValid = await user.comparePassword(password); //or const isPasswordValid = await user.comparePassword.call(user, password);
+        const isPasswordValid = await bcrypt.compare(password,user.password); //or const isPasswordValid = await user.comparePassword.call(user, password);
+        console.log(`isPasswordValid : ${isPasswordValid}`);
         if(!isPasswordValid){
             return res.status(200).json({
                 success : false,
                 message : "Password is incorrect"
             })
         }
+        
 
         //jwt token
         const jwtToken = jwt.sign({id : user.id},process.env.JWT_SECRET,{
@@ -176,8 +177,17 @@ const login = async(req,res)=>{
         }
 
         res.cookie("jwtToken",jwtToken,cookieOptions);
+
+        return res.status(200).json({
+            success : true,
+            message : "User logged in successfully"
+        })
     } catch (error) {
-        
+        console.log("Unable to login user : ",error);
+        res.status(200).json({
+            success : false,
+            message : "Unable to login user"
+        })
     }
 }
 
